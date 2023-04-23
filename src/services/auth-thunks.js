@@ -38,3 +38,31 @@ export const registerThunk = createAsyncThunk(
         return user;
     }
 );
+
+export const registerCriticThunk = createAsyncThunk(
+    "auth/registercritic", async (credentials) => {
+        const user = await authService.registerCritic(credentials);
+        return user;
+    }
+);
+
+export const registerAuthorThunk = createAsyncThunk(
+    "auth/registerauthor", async (credentials) => {
+        const user = await authService.registerAuthor(credentials);
+        return user;
+    }
+);
+
+export const getCriticsForBookThunk = createAsyncThunk(
+    "auth/getcritics", async (bookDetails) => {
+        const response = await authService.getCriticsForBook(bookDetails);
+        return response;
+    }
+)
+
+export const getAllCriticsThunk = createAsyncThunk(
+    "auth/getallcritics", async () => {
+        const response = await authService.getAllCritics();
+        return response;
+    }
+)

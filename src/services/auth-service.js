@@ -29,18 +29,73 @@ export const publicProfile = async (user) => {
 };
 
 export const updateUser = async (user) => {
+    console.log("updating user!");
+    console.log(user);
     const response = await api.put(`${USERS_URL}/${user._id}`, user);
     return response.data;
 };
 
-export const register = async ({ username, password, firstname, lastname, email, role }) => {
+export const register = async ({ username, password, firstname, lastname, email, favorites, currentlyReading, followers, following, reviews, role }) => {
     const response = await api.post(`${USERS_URL}/register`, {
         username,
         password,
         firstname,
         lastname,
         email,
+        favorites,
+        currentlyReading,
+        followers,
+        following,
+        reviews,
         role,
     });
+    return response.data;
+}
+
+export const registerCritic = async ({ username, password, firstname, lastname, email, favorites, currentlyReading, followers, following, reviews, role, recommendation }) => {
+    const response = await api.post(`${USERS_URL}/register`, {
+        username,
+        password,
+        firstname,
+        lastname,
+        email,
+        favorites,
+        currentlyReading,
+        followers,
+        following,
+        reviews,
+        role,
+        recommendation,
+    });
+    return response.data;
+}
+
+export const registerAuthor = async ({ username, password, firstname, lastname, email, favorites, currentlyReading, followers, following, reviews, role, books }) => {
+    const response = await api.post(`${USERS_URL}/register`, {
+        username,
+        password,
+        firstname,
+        lastname,
+        email,
+        favorites,
+        currentlyReading,
+        followers,
+        following,
+        reviews,
+        role,
+        books,
+    });
+    return response.data;
+}
+
+export const getCriticsForBook = async (bookDetails) => {
+    const response = await api.get(`${USERS_URL}/critics/${bookDetails.id}`, {
+        bookDetails
+    });
+    return response.data;
+}
+
+export const getAllCritics = async () => {
+    const response = await api.get(`${USERS_URL}/critics`);
     return response.data;
 }

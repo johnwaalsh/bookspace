@@ -14,6 +14,9 @@ import {Provider} from "react-redux";
 import SearchComponent from "./search";
 import SearchResultsComponent from "./search/search-results";
 import bookReducer from "./services/book-reducer";
+import AcclaimedComponent from "./acclaimed";
+import HomeComponent from "./home";
+import UploadComponent from "./upload";
 const store = configureStore(
     {reducer: {auth: authReducer, books: bookReducer}});
 
@@ -31,6 +34,9 @@ function App() {
                 <Route path="/search" element={<SearchComponent/>}/>
                 <Route path="/search/:query" element={<SearchResultsComponent/>}/>
                 <Route path="/details/:bid" element={<BookDetailsComponent/>}/>
+                <Route path="/acclaimed" element={<AcclaimedComponent/>}/>
+                <Route path="/" element={<HomeComponent/>}/>
+                <Route path="/upload" element={<UploadComponent/>}/>
             </Routes>
           </BrowserRouter>
       </Provider>

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import { loginThunk, registerThunk } from "../services/auth-thunks";
+import {loginThunk, registerAuthorThunk, registerCriticThunk, registerThunk} from "../services/auth-thunks";
 
 const LoginComponent = ()=> {
     let [createAccount, setCreateAccount] = useState(false);
@@ -11,22 +11,39 @@ const LoginComponent = ()=> {
     let [lastname, setLastname] = useState("");
     let [email, setEmail] = useState("");
     let [role, setRole] = useState("");
+    let [error, setError] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const loginHandler = async () => {
         if (username && password) {
             try {
-                await dispatch(loginThunk({ username, password }));
-                navigate("/profile");
+                const response = await dispatch(loginThunk({ username, password }));
+                if (!("error" in response)) {
+                    navigate("/profile");
+                } else {
+                    setError("Login failed!")
+                }
             } catch (e) {
                 alert(e);
             }
+
         }
     };
     const registerHandler = async () => {
         if (username && password && firstname && lastname && email && role) {
             try {
-                await dispatch(registerThunk({ username, password, firstname, lastname, email, role }));
+                let completeCredentials = { username, password, firstname, lastname, email, "favorites": [], "currentlyReading": [], "followers": [], "following": [], "reviews": [], role }
+                if (role == "Reader") {
+                    await dispatch(registerThunk(completeCredentials));
+                }
+                else if (role == "Critic") {
+                    completeCredentials = {...completeCredentials, "recommendation": ""}
+                    await dispatch(registerCriticThunk(completeCredentials));
+                }
+                else if (role == "Author") {
+                    completeCredentials = {...completeCredentials, "books": []}
+                    await dispatch(registerAuthorThunk(completeCredentials));
+                }
                 navigate("/profile");
             } catch (e) {
                 alert(e);
@@ -42,6 +59,9 @@ const LoginComponent = ()=> {
     return (
         <div className="d-flex justify-content-center">
             <div className="d-flex flex-column m-3 col-3">
+                <>{error && <div className="alert alert-danger">
+                    {error}
+                </div>}</>
                 <input className="form-control rounded-2 mb-3 border-2 border-dark" placeholder="Username" value={username} onChange={(event) => setUsername(event.target.value)}></input>
                 <input className="form-control rounded-2 mb-3 border-2 border-dark" type="password" placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)}></input>
                 <>{createAccount &&
