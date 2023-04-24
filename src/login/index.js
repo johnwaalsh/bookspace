@@ -58,7 +58,7 @@ const LoginComponent = ()=> {
     }
     return (
         <div className="d-flex justify-content-center">
-            <div className="d-flex flex-column m-3 col-3">
+            <div className="d-flex flex-column m-3 col-lg-3 col-sm-5 col-md-5 col-7">
                 <>{error && <div className="alert alert-danger">
                     {error}
                 </div>}</>

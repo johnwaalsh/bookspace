@@ -191,7 +191,7 @@ function BookDetailsComponent() {
             </div>
             <div className="border border-2 mt-3">
                 <h4 className="p-3 ps-5">Reviews</h4>
-                <>{currentUser && (!reviews.map(review => review.author).includes(currentUser.username)) && !hasReviewed && <div className="ms-5 text-bg-light col-7 rounded-2 mb-3 pt-3 ps-3 pb-3">
+                <>{currentUser && (!reviews.map(review => review.author).includes(currentUser.username)) && !hasReviewed && <div className="ms-5 text-bg-light col-9 col-md-10 col-lg-10 rounded-2 mb-3 pt-3 ps-3 pb-3">
                     <span className="ps-3 fw-bold">{currentUser.username}</span>
                     <div className="d-flex ps-2 pe-3 pb-1">
                         <>{rating === 0 && <i style={{fontSize: 20}} onClick={() => setRating(1)}
@@ -231,7 +231,7 @@ function BookDetailsComponent() {
                 <h4 className="pt-3 pe-3 ps-5 mb-3">Critic Recommendations</h4>
                 <>{currentUser && currentUser.role == "Critic" && !(critics.map(critic => critic.username).includes(currentUser.username)) && <button className="m-3 ms-5 align-self-start rounded-3 p-2 text-bg-primary" onClick={recommendClickHandler}>Recommend this book!</button>}</>
                 <>{currentUser && currentUser.role == "Critic" && (critics.map(critic => critic.username).includes(currentUser.username)) && <button className="m-3 ms-5 align-self-start rounded-3 p-2 text-bg-primary" onClick={unrecommendClickHandler}>Undo recommendation</button>}</>
-                <>{critics.length === 0 && <span className="p-3 ps-5">Looks like no critics have recommended this book yet...</span>}</>
+                <>{critics.length === 0 && <span className="p-3 ps-5 me-5">Looks like no critics have recommended this book yet...</span>}</>
                 <>{
                     critics.map(critic =>
                         <div className="mt-4 mb-4">

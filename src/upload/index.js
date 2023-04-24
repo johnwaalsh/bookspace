@@ -32,9 +32,9 @@ function UploadComponent() {
             <h4>Upload a book!</h4>
             <div className="d-flex flex-column">
                 <label className="mt-3" for="title">Title:</label>
-                <input className="col-3 align-self-start" id="title" value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Book title"></input>
+                <input className="col-10 col-sm-9 col-md-8 col-lg-7 align-self-start" id="title" value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Book title"></input>
                 <label className="mt-3" htmlFor="desc">Description:</label>
-                <textarea rows={3} className="col-5 align-self-start" id="desc" value={desc} onChange={(event) => setDesc(event.target.value)} placeholder="Book description"></textarea>
+                <textarea rows={3} className="col-10 col-sm-9 col-md-8 col-lg-7 align-self-start" id="desc" value={desc} onChange={(event) => setDesc(event.target.value)} placeholder="Book description"></textarea>
                 <button className="p-2 text-bg-primary mt-4 align-self-start rounded-3" onClick={postHandler}>Post Book</button>
             </div>
         </div>

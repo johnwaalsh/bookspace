@@ -53,8 +53,8 @@ function PublicProfileComponent() {
                     <>{profile.role === "Critic" && profile.recommendation === "" && <span className="ps-3 mb-2">{profile.firstname} has not recommended any books yet.</span>}</>
                 </div>
             </div>
-            <div className="row">
-                <div className="col-3">
+            <>{profile.role === "Author" && <div className="d-flex flex-lg-row flex-column">
+                <div className="col-lg-3 col-12">
                     <h5 className="p-3">Currently Reading</h5>
                     <div className="p-3">
                         <>{profile.currentlyReading.length === 0 && <span>Nothing here yet...</span>}</>
@@ -68,7 +68,7 @@ function PublicProfileComponent() {
                         }</>
                     </div>
                 </div>
-                <div className="col-3">
+                <div className="col-lg-3 col-12">
                     <h5 className="p-3">Favorites</h5>
                     <div className="p-3">
                         <>{profile.favorites.length === 0 && <span>Nothing here yet...</span>}</>
@@ -82,7 +82,7 @@ function PublicProfileComponent() {
                         }</>
                     </div>
                 </div>
-                <div className="col-3">
+                <div className="col-lg-3 col-12">
                     <h5 className="p-3">Reviews</h5>
                     <div className="p-3">
                         <>{reviews.length === 0 && <span>Nothing here yet...</span>}</>
@@ -96,7 +96,7 @@ function PublicProfileComponent() {
                         }</>
                     </div>
                 </div>
-                <div className="col-3">
+                <div className="col-lg-3 col-12">
                     <h5 className="p-3">Authored Books</h5>
                     <div className="p-3">
                         <>{authoredBooks.length === 0 && <span>Nothing here yet...</span>}</>
@@ -110,7 +110,51 @@ function PublicProfileComponent() {
                         }</>
                     </div>
                 </div>
-            </div>
+            </div>}</>
+            <>{profile.role !== "Author" && <div className="d-flex flex-lg-row flex-column">
+                <div className="col-lg-4 col-12">
+                    <h5 className="p-3">Currently Reading</h5>
+                    <div className="p-3">
+                        <>{profile.currentlyReading.length === 0 && <span>Nothing here yet...</span>}</>
+                        <>{profile.currentlyReading !== 0 &&
+                            profile.currentlyReading.map(bookID =>
+                                <div className="">
+                                    <MiniBook
+                                        bookID={bookID}/>
+                                </div>
+                            )
+                        }</>
+                    </div>
+                </div>
+                <div className="col-lg-4 col-12">
+                    <h5 className="p-3">Favorites</h5>
+                    <div className="p-3">
+                        <>{profile.favorites.length === 0 && <span>Nothing here yet...</span>}</>
+                        <>{profile.favorites !== 0 &&
+                            profile.favorites.map(bookID =>
+                                <div className="">
+                                    <MiniBook
+                                        bookID={bookID}/>
+                                </div>
+                            )
+                        }</>
+                    </div>
+                </div>
+                <div className="col-lg-4 col-12">
+                    <h5 className="p-3">Reviews</h5>
+                    <div className="p-3">
+                        <>{reviews.length === 0 && <span>Nothing here yet...</span>}</>
+                        <>{reviews.length !== 0 &&
+                            reviews.map(review =>
+                                <div className="">
+                                    <MiniReview
+                                        review={review}/>
+                                </div>
+                            )
+                        }</>
+                    </div>
+                </div>
+            </div>}</>
         </div>
     );
 }

@@ -46,7 +46,7 @@ function ProfileComponent() {
     return (
         <>
         <>{!currentUser && <span className="m-5">Whoops, you're not logged in! <Link to="/login">Click here to login</Link></span>}</>
-        <>{currentUser && <div className="m-5 border border-2">
+        <>{currentUser && currentUser.role === "Author" && <div className="m-5 border border-2">
             <div className="d-flex border border border-top-0 border-start-0 border-end-0">
                 <div className="d-flex flex-column pb-2">
                     <h3 className="ps-3 pt-3">{profile.firstname} {profile.lastname}</h3>
@@ -56,10 +56,10 @@ function ProfileComponent() {
                     <>{profile.role === "Critic" && profile.recommendation !== "" && <span className="ps-3 mb-2 text-info">{profile.firstname} recommends that you read <Link className="text-info" to={"/details/" + profile.recommendation}>{recommended.title}</Link>!</span>}</>
                     <>{profile.role === "Critic" && profile.recommendation === "" && <span className="ps-3 mb-2">{profile.firstname} has not recommended any books yet.</span>}</>
                 </div>
-                <Link to="/edit-profile" className="ms-auto align-self-center p-2 m-3"><button>Edit Profile</button></Link>
+                <Link to="/edit-profile" className="ms-auto align-self-center p-2 m-3"><button className="p-2 rounded-3">Edit Profile</button></Link>
             </div>
-            <div className="row">
-                <div className="col-3">
+            <div className="d-flex flex-lg-row flex-column">
+                <div className="col-lg-3 col-12">
                     <h5 className="p-3">Currently Reading</h5>
                     <div className="p-3">
                         <>{profile.currentlyReading.length === 0 && <span>Nothing here yet...</span>}</>
@@ -73,7 +73,7 @@ function ProfileComponent() {
                         }</>
                     </div>
                 </div>
-                <div className="col-3">
+                <div className="col-lg-3 col-12">
                     <h5 className="p-3">Favorites</h5>
                     <div className="p-3">
                         <>{profile.favorites.length === 0 && <span>Nothing here yet...</span>}</>
@@ -87,7 +87,7 @@ function ProfileComponent() {
                         }</>
                     </div>
                 </div>
-                <div className="col-3">
+                <div className="col-lg-3 col-12">
                     <h5 className="p-3">Reviews</h5>
                     <div className="p-3">
                         <>{reviews.length === 0 && <span>Nothing here yet...</span>}</>
@@ -101,7 +101,7 @@ function ProfileComponent() {
                         }</>
                     </div>
                 </div>
-                <div className="col-3">
+                <div className="col-lg-3 col-12">
                     <h5 className="p-3">Authored Books</h5>
                     <div className="p-3">
                         <>{authoredBooks.length === 0 && <span>Nothing here yet...</span>}</>
@@ -116,7 +116,66 @@ function ProfileComponent() {
                     </div>
                 </div>
             </div>
-        </div>}</></>
+        </div>}
+        </>
+            <>{currentUser && currentUser.role !== "Author" && <div className="m-5 border border-2">
+                <div className="d-flex border border border-top-0 border-start-0 border-end-0">
+                    <div className="d-flex flex-column pb-2">
+                        <h3 className="ps-3 pt-3">{profile.firstname} {profile.lastname}</h3>
+                        <span className="ps-3 text-secondary mb-2">{profile.username}</span>
+                        <span className="ps-3 text-secondary mb-2">Role: {profile.role}</span>
+                        <span className="ps-3 text-secondary mb-2">Account Email: {profile.email}</span>
+                        <>{profile.role === "Critic" && profile.recommendation !== "" && <span className="ps-3 mb-2 text-info">{profile.firstname} recommends that you read <Link className="text-info" to={"/details/" + profile.recommendation}>{recommended.title}</Link>!</span>}</>
+                        <>{profile.role === "Critic" && profile.recommendation === "" && <span className="ps-3 mb-2">{profile.firstname} has not recommended any books yet.</span>}</>
+                    </div>
+                    <Link to="/edit-profile" className="ms-auto align-self-center p-2 m-3"><button className="p-2 rounded-3">Edit Profile</button></Link>
+                </div>
+                <div className="d-flex flex-lg-row flex-column">
+                    <div className="col-lg-4 col-12">
+                        <h5 className="p-3">Currently Reading</h5>
+                        <div className="p-3">
+                            <>{profile.currentlyReading.length === 0 && <span>Nothing here yet...</span>}</>
+                            <>{profile.currentlyReading !== 0 &&
+                                profile.currentlyReading.map(bookID =>
+                                    <div className="">
+                                        <MiniBook
+                                            bookID={bookID} details={null}/>
+                                    </div>
+                                )
+                            }</>
+                        </div>
+                    </div>
+                    <div className="col-lg-4 col-12">
+                        <h5 className="p-3">Favorites</h5>
+                        <div className="p-3">
+                            <>{profile.favorites.length === 0 && <span>Nothing here yet...</span>}</>
+                            <>{profile.favorites !== 0 &&
+                                profile.favorites.map(bookID =>
+                                    <div className="">
+                                        <MiniBook
+                                            bookID={bookID} details={null}/>
+                                    </div>
+                                )
+                            }</>
+                        </div>
+                    </div>
+                    <div className="col-lg-4 col-12">
+                        <h5 className="p-3">Reviews</h5>
+                        <div className="p-3">
+                            <>{reviews.length === 0 && <span>Nothing here yet...</span>}</>
+                            <>{reviews.length !== 0 &&
+                                reviews.map(review =>
+                                    <div className="">
+                                        <MiniReview
+                                            review={review}/>
+                                    </div>
+                                )
+                            }</>
+                        </div>
+                    </div>
+                </div>
+            </div>}</>
+        </>
     );
 }
 export default ProfileComponent;

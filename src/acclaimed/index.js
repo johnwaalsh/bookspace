@@ -14,12 +14,10 @@ function AcclaimedComponent() {
             const { payload } = await dispatch(getAllCriticsThunk());
             setCritics(payload);
             async function getBookDetails(criticData) {
-                console.log("in get book details")
                 let newCritics = [];
                 for (let i = 0; i < criticData.length; i++) {
                     if (criticData[i].recommendation !== "") {
                         let newCritic = {...criticData[i]};
-                        console.log(criticData[i])
                         const { payload } = await dispatch(getCreatedDetailsThunk({"id": criticData[i].recommendation}));
                         newCritic["title"] = payload.title;
                         newCritic["image"] = payload.image;
@@ -38,7 +36,7 @@ function AcclaimedComponent() {
                 <div className="d-flex row ms-1">
                     {
                         critics.map(critic =>
-                            <div className="col-3 text-bg-light me-4 pt-3 border border-2 border-warning mb-4">
+                            <div className="col-12 col-sm-4 col-lg-3 col-md-3 text-bg-light me-4 pt-3 border border-2 border-warning mb-4">
                                 <div className="ms-3">
                                     <span className="text-primary"><Link to={"/profile/" + critic.username}>{critic.firstname} {critic.lastname}</Link> recommends...</span>
                                 </div>

@@ -30,14 +30,14 @@ function SearchResultsComponent() {
     return (
         <div>
             <div className="d-flex m-5">
-                <textarea className="rounded-3 m-3 col-10 p-2" placeholder="Search books..." rows="1" value={currQuery} onChange={(event) => setCurrQuery(event.target.value)}></textarea>
-                <button className="align-self-center col-1 ms-3" onClick={searchHandler}>Search</button>
+                <textarea className="rounded-3 m-3 col-lg-10 col-9 p-2" placeholder="Search books..." rows="1" value={currQuery} onChange={(event) => setCurrQuery(event.target.value)}></textarea>
+                <button className="align-self-center col-lg-1 col-2 ms-3 rounded-3" onClick={searchHandler}>Search</button>
             </div>
             <div className="d-flex m-5">
                 <div className="d-flex row">
                     {
                         books.map(book =>
-                            <div className="col-3">
+                            <div className="col-6 col-md-3 col-lg-3">
                                 <BookItem
                                     book={book}/>
                             </div>

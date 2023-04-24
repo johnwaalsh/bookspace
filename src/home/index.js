@@ -22,7 +22,17 @@ function HomeComponent() {
         }
         async function getAllReviews() {
             const { payload } = await dispatch(getAllReviewsThunk());
-            setReviews(payload);
+            async function getBookDetails(reviewData) {
+                let newReviews = [];
+                for (let i = 0; i < reviewData.length; i++) {
+                    let newReview = {...reviewData[i]};
+                    const { payload } = await dispatch(getCreatedDetailsThunk({"id": reviewData[i].book}));
+                    newReview["image"] = payload.image;
+                    newReviews.push(newReview);
+                }
+                setReviews(newReviews);
+            }
+            await getBookDetails(payload);
         }
         getAndLoadProfile();
         getAllReviews();
@@ -31,8 +41,8 @@ function HomeComponent() {
     return (
         <div className="">
             <>{profile && <h4 className="m-5">Welcome back, {profile.firstname}!</h4>}</>
-            <>{profile && <div className="d-flex ms-5 me-5 border border-2">
-                <div className="col-4 p-2 border border-start-0 border-top-0 border-bottom-0">
+            <>{profile && <div className="d-flex flex-column flex-lg-row ms-5 me-5 border border-2 border-end-0 border-start-0">
+                <div className="col-12 col-lg-4 p-2 border border-start-0 border-top-0 border-bottom-0 border-end-0">
                     <h4 className="p-3 ms-3">Recent Reviews</h4>
                     <div className="p-3 ms-3">
                         <>{reviewsCopy.length === 0 && <span>Nothing here yet...</span>}</>
@@ -47,13 +57,13 @@ function HomeComponent() {
                         }</>
                     </div>
                 </div>
-                <div className="col-4 p-2 border border-start-0 border-top-0 border-bottom-0">
+                <div className="col-12 col-lg-4 p-2 border border-start-0 border-end-0 border-top-0 border-bottom-0">
                     <h4 className="p-3 ms-5">Your Reading List</h4>
                     <div className="p-3">
                         <>{profile.currentlyReading.length === 0 && <span>Nothing here yet...</span>}</>
                         <>{profile.currentlyReading !== 0 &&
                             profile.currentlyReading.map(bookID =>
-                                <div className="">
+                                <div className="ms-5 ms-lg-0">
                                     <MiniBook
                                         bookID={bookID} details={null}/>
                                 </div>
@@ -61,13 +71,13 @@ function HomeComponent() {
                         }</>
                     </div>
                 </div>
-                <div className="col-4 p-2">
+                <div className="col-12 col-lg-4 p-2">
                     <h4 className="p-3 ms-5">Your Favorites</h4>
                     <div className="p-3">
                         <>{profile.favorites.length === 0 && <span>Nothing here yet...</span>}</>
                         <>{profile.favorites !== 0 &&
                             profile.favorites.map(bookID =>
-                                <div className="">
+                                <div className="ms-5 ms-lg-0">
                                     <MiniBook
                                         bookID={bookID} details={null}/>
                                 </div>
@@ -76,10 +86,10 @@ function HomeComponent() {
                     </div>
                 </div>
             </div>}</>
-            <>{!profile && <div className="d-flex me-5">
+            <>{!profile && <div className="d-flex me-5 ms-5">
                 <div className="col-12 me-5">
-                    <h4 className="p-3 ms-3">Recent Reviews</h4>
-                    <div className="p-3 ms-3">
+                    <h4 className="pt-3">Recent Reviews</h4>
+                    <div className="pt-3">
                         <>{reviewsCopy.length === 0 && <span>Nothing here yet...</span>}</>
                         <>{reviewsCopy.length !== 0 &&
                             reviewsCopy.map(review =>
