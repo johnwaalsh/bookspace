@@ -25,21 +25,21 @@ function PublicProfileComponent() {
                 const { payload } = await dispatch(getBooksForUserThunk({"user": username }));
                 setAuthoredBooks(payload);
             }
-            getAuthoredBooks();
-        }
-        async function getReviews() {
-            const { payload } = await dispatch(getReviewsForUserThunk({"user": username }));
-            setReviews(payload);
-        }
-        async function getRecommended() {
-            if (profile.role === "Critic" && profile.recommendation !== "") {
-                const { payload } = await dispatch(getCreatedDetailsThunk({"id": profile.recommendation}));
-                setRecommended(payload);
+            async function getReviews() {
+                const { payload } = await dispatch(getReviewsForUserThunk({"user": username }));
+                setReviews(payload);
             }
+            async function getRecommended(profileData) {
+                if (profileData.role === "Critic" && profileData.recommendation !== "") {
+                    const { payload } = await dispatch(getCreatedDetailsThunk({"id": profileData.recommendation}));
+                    setRecommended(payload);
+                }
+            }
+            getAuthoredBooks();
+            getReviews();
+            getRecommended(payload);
         }
         getAndLoadProfile();
-        getReviews();
-        getRecommended();
     }, [dispatch, username, profile.recommendation]);
     return (
 
